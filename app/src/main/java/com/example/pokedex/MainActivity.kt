@@ -27,7 +27,7 @@ class MainActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var pokemonRecyclerAdapter: PokemonRecyclerAdapter
     var offset = 0
-    var readyToLoad = true
+    var readyToLoad = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,7 +61,7 @@ class MainActivity : AppCompatActivity() {
         retrofit = Retrofit.Builder()
             .baseUrl("https://pokeapi.co/api/v2/")
             .addConverterFactory(GsonConverterFactory.create()).build()
-
+        readyToLoad = true
         getData(offset)
     }
 
@@ -110,6 +110,10 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 pokemonRecyclerAdapter.filter.filter(newText)
+                readyToLoad=false
+                if (newText.isNullOrEmpty()){
+                    readyToLoad=true
+                }
                 return false
             }
 

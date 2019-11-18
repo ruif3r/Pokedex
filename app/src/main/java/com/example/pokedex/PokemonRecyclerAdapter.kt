@@ -14,7 +14,7 @@ import com.squareup.picasso.Picasso
 class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewHolder>(), Filterable {
 
     var dataset = ArrayList<PokemonInfo>()
-    private var datasetAll : ArrayList<PokemonInfo> = dataset
+    private var datasetForSearch : ArrayList<PokemonInfo> = dataset
 
     fun PokemonRecyclerAdapter(dataset : ArrayList<PokemonInfo>){
         this.dataset = dataset
@@ -43,7 +43,7 @@ class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewH
     fun addToListPokemon(pokemonList: ArrayList<PokemonInfo>?) {
         if (pokemonList != null) {
             dataset.addAll(pokemonList)
-            datasetAll=ArrayList(dataset)
+            datasetForSearch=ArrayList(dataset)
             notifyDataSetChanged()
         }
     }
@@ -64,11 +64,11 @@ class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewH
 
 
             if (constraint==null || constraint.isEmpty()){
-                filteredList.addAll(datasetAll) //Esto hace que no desaparezca el recyclerview
+                filteredList.addAll(datasetForSearch) //Esto hace que no desaparezca el recyclerview
             }else{
                 val filterPattern : String = constraint.toString().toLowerCase().trim()
 
-                for (item in datasetAll){
+                for (item in datasetForSearch){
                     if (item.name.toLowerCase().contains(filterPattern) || item.getNumbers().toString().contains(filterPattern)){
                         filteredList.add(item)
                     }
