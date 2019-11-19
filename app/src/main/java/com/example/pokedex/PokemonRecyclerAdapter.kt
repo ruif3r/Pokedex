@@ -1,5 +1,6 @@
 package com.example.pokedex
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,6 +10,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.models.PokemonInfo
+import com.example.pokedex.views.PokemonDetailedActivity
 import com.squareup.picasso.Picasso
 
 class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewHolder>(), Filterable {
@@ -38,6 +40,11 @@ class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewH
             .load("https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${p.getNumbers()}.png")
             .into(holder.photoImageView)
 
+        holder.photoImageView.setOnClickListener {
+            val intent = Intent(it.context, PokemonDetailedActivity::class.java)
+            intent.putExtra("id", p.getNumbers())
+            it.context.startActivity(intent)
+        }
     }
 
     fun addToListPokemon(pokemonList: ArrayList<PokemonInfo>?) {
@@ -52,6 +59,7 @@ class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewH
         var photoImageView : ImageView = itemView.findViewById(R.id.pokemonView)
         var pokemonName : TextView = itemView.findViewById(R.id.nameView)
         var pokemonNumber : TextView = itemView.findViewById(R.id.pokemonNumberView)
+
     }
 
     override fun getFilter(): Filter {
@@ -85,5 +93,4 @@ class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewH
             notifyDataSetChanged()
         }
     }
-
 }

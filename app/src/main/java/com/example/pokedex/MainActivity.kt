@@ -71,7 +71,7 @@ class MainActivity : AppCompatActivity() {
         pokemonResponseCall.enqueue(object : Callback<PokemonResponse> {
             override fun onFailure(call: Call<PokemonResponse>, t: Throwable) {
                 readyToLoad = true
-                val alertDialog = AlertDialog.Builder(this@MainActivity)
+                val alertDialog = AlertDialog.Builder(this@MainActivity) //por que no es suficiente con solo colocar la palabra this?
                 alertDialog.setTitle("Error")
                 alertDialog.setMessage("${t.message}")
             }
