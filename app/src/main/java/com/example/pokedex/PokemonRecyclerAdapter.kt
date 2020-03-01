@@ -11,17 +11,13 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.models.PokemonInfo
 import com.example.pokedex.views.PokemonDetailedActivity
+import com.example.pokedex.views.WebDetailActivity
 import com.squareup.picasso.Picasso
 
 class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewHolder>(), Filterable {
 
     var dataset = ArrayList<PokemonInfo>()
     private var datasetForSearch : ArrayList<PokemonInfo> = dataset
-
-    fun PokemonRecyclerAdapter(dataset : ArrayList<PokemonInfo>){
-        this.dataset = dataset
-
-    }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view : View = LayoutInflater.from(parent.context).inflate(R.layout.item_pokemon, parent, false)
@@ -45,6 +41,11 @@ class PokemonRecyclerAdapter : RecyclerView.Adapter<PokemonRecyclerAdapter.ViewH
             intent.putExtra("id", p.getNumbers())
             it.context.startActivity(intent)
         }
+       /* holder.photoImageView.setOnClickListener {
+            val intent = Intent(it.context, WebDetailActivity::class.java)
+            intent.putExtra("name", p.name)
+            it.context.startActivity(intent)
+        }*/
     }
 
     fun addToListPokemon(pokemonList: ArrayList<PokemonInfo>?) {
