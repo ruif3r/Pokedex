@@ -4,7 +4,7 @@ import com.example.pokedex.data.PokemonDataSet
 import com.example.pokedex.models.PokemonInfo
 import com.example.pokedex.pokeapi.PokeApiAdapter
 
-class PokemonDataUseCase {
+class PokemonRepository {
 
     fun getPokemonListCase(offset: Int) =
         PokemonDataSet<PokemonInfo.PokemonList>().makeCall(

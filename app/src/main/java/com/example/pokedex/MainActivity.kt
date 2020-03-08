@@ -1,11 +1,11 @@
 package com.example.pokedex
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.SearchView.OnQueryTextListener
+import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
@@ -17,10 +17,13 @@ import com.example.pokedex.viewmodel.MainViewModel
 class MainActivity : AppCompatActivity() {
 
     lateinit var recyclerView: RecyclerView
-    lateinit var pokemonRecyclerAdapter: PokemonRecyclerAdapter
+    var pokemonRecyclerAdapter = PokemonRecyclerAdapter()
     lateinit var viewModel: MainViewModel
     var offset = 0
     var readyToLoad = false
+    private val pokemonObserver = Observer<PokemonInfo.PokemonList> {
+        pokemonRecyclerAdapter.addToListPokemon(it.results)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,54 +32,34 @@ class MainActivity : AppCompatActivity() {
         viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
 
         recyclerView = findViewById(R.id.recyclerView)
-        pokemonRecyclerAdapter = PokemonRecyclerAdapter()
         recyclerView.adapter = pokemonRecyclerAdapter
         recyclerView.setHasFixedSize(true)
         val layoutManager = GridLayoutManager(this, 3)
         recyclerView.layoutManager = layoutManager
-       /* recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+        recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
-                    val visibleItemCount = layourManager.childCount
-                    val totalItemCount = layourManager.itemCount
-                    val pastVisibleItems = layourManager.findFirstVisibleItemPosition()
+                    val visibleItemCount = layoutManager.childCount
+                    val totalItemCount = layoutManager.itemCount
+                    val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
                     if (readyToLoad) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
-                            readyToLoad = false
                             offset += 20
-                            val pokemonObserver = Observer<PokemonInfo.PokemonList> {
-                                pokemonRecyclerAdapter.dataset = it.results!!
-                            }
-                            viewModel.getPokemonsLiveData(offset)
-                                .observe(MainActivity(), pokemonObserver)
+                            subscribe()
                         }
                     }
                 }
             }
-        })*/
+        })
+        readyToLoad = true
         subscribe()
-        // readyToLoad = true
-
-       // viewModel.initViewModel()
-       // val result = viewModel.getPokemonsLiveData(offset).value?.results!!
-        /*if (result != null) {
-            pokemonRecyclerAdapter.dataset = result
-        } else {
-
-        }*/
-       // result?.let { resultNotEmpty ->
-         //   pokemonRecyclerAdapter.dataset = resultNotEmpty
-        //}
     }
 
     private fun subscribe() {
-        val pokemonObserver = Observer<PokemonInfo.PokemonList> {
-            pokemonRecyclerAdapter.addToListPokemon(it.results)
-        }
         viewModel.getPokemonsLiveData(offset)
-            .observe(MainActivity(), pokemonObserver)
+            .observe(this, pokemonObserver)
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

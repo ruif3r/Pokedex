@@ -1,12 +1,12 @@
 package com.example.pokedex.viewmodel
 
 import androidx.lifecycle.ViewModel
-import com.example.pokedex.domain.PokemonDataUseCase
+import com.example.pokedex.domain.PokemonRepository
 
 class MainViewModel : ViewModel() {
 
-    private val useCase = PokemonDataUseCase()
+    private val pokemonRepo = PokemonRepository()
 
-    fun getPokemonsLiveData(offset: Int) = useCase.getPokemonListCase(offset)
+    fun getPokemonsLiveData(offset: Int) = pokemonRepo.getPokemonListCase(offset)
 
 }
