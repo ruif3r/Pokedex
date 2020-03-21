@@ -8,7 +8,7 @@ import retrofit2.Response
 
 open class PokemonDataSet<T> {
 
-    lateinit var call: Call<T>
+    private lateinit var call: Call<T>
 
     fun makeCall(call: Call<T>): LiveData<T> {
         this.call = call

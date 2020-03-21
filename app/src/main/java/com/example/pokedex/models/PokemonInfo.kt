@@ -27,9 +27,16 @@ data class PokemonInfo (var name : String, var url : String?, var id : Int){
 
     data class PokemonType(var name : String)
 
-    class TypeResponse(var type : PokemonType)
+    data class TypeResponse(var type : PokemonType)
 
-    data class PokemonSpecies(var capture_rate : Int, var evolves_from_species : EvolvesFrom)
+    data class PokemonSpecies(var capture_rate : Int, var evolves_from_species : EvolvesFrom, var flavor_text_entries: ArrayList<FlavorText>,
+    var generation : OriginalGeneration)
 
-    class EvolvesFrom(var name : String)
+    data class EvolvesFrom(var name : String)
+
+    data class FlavorText(var flavor_text : String, var language : Language)
+
+    data class Language(var name: String)
+
+    data class OriginalGeneration(var name : String)
 }

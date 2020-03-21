@@ -11,16 +11,18 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.models.PokemonInfo
-import com.example.pokedex.viewmodel.MainViewModel
+import com.example.pokedex.viewmodels.MainViewModel
 
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var recyclerView: RecyclerView
+    private lateinit var recyclerView: RecyclerView
     var pokemonRecyclerAdapter = PokemonRecyclerAdapter()
-    lateinit var viewModel: MainViewModel
+    private val viewModel by lazy{
+        ViewModelProvider(this).get(MainViewModel::class.java)
+    }
     var offset = 0
-    var readyToLoad = false
+    var readyToPagination = false
     private val pokemonObserver = Observer<PokemonInfo.PokemonList> {
         pokemonRecyclerAdapter.addToListPokemon(it.results)
     }
@@ -28,9 +30,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-
-        viewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.adapter = pokemonRecyclerAdapter
         recyclerView.setHasFixedSize(true)
@@ -40,11 +39,12 @@ class MainActivity : AppCompatActivity() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
                 if (dy > 0) {
+
                     val visibleItemCount = layoutManager.childCount
                     val totalItemCount = layoutManager.itemCount
                     val pastVisibleItems = layoutManager.findFirstVisibleItemPosition()
 
-                    if (readyToLoad) {
+                    if (readyToPagination) {
                         if ((visibleItemCount + pastVisibleItems) >= totalItemCount) {
                             offset += 20
                             subscribe()
@@ -53,7 +53,7 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         })
-        readyToLoad = true
+        readyToPagination = true
         subscribe()
     }
 
@@ -78,9 +78,9 @@ class MainActivity : AppCompatActivity() {
 
             override fun onQueryTextChange(newText: String?): Boolean {
                 pokemonRecyclerAdapter.filter.filter(newText)
-                readyToLoad = false
+                readyToPagination = false
                 if (newText.isNullOrEmpty()) {
-                    readyToLoad = true
+                    readyToPagination = true
                 }
                 return false
             }

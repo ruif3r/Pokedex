@@ -11,4 +11,11 @@ class PokemonRepository {
             PokeApiAdapter.pokeApi.getPokemonList(offset)
         )
 
+    fun getPokemonDetailsCase(id: Int) =
+        PokemonDataSet<PokemonInfo>().makeCall(PokeApiAdapter.pokeApi.getPokemonDetail(id))
+
+    fun getPokemonSpeciesCase(id: Int) =
+        PokemonDataSet<PokemonInfo.PokemonSpecies>().makeCall(
+            PokeApiAdapter.pokeApi.getPokemonSpecies(id)
+        )
 }
