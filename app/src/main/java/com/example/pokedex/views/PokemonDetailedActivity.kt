@@ -9,6 +9,7 @@ import com.example.pokedex.models.PokemonInfo
 import com.example.pokedex.viewmodels.PokemonDetailsViewModel
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_pokemon_detailed.*
+import java.util.*
 
 class PokemonDetailedActivity : AppCompatActivity() {
 
@@ -53,9 +54,15 @@ class PokemonDetailedActivity : AppCompatActivity() {
 
     fun subscribeToSpieciesLiveData() {
         val pokemonSpeciesObserver = Observer<PokemonInfo.PokemonSpecies> { pokemonSpecies ->
-            evolves_from_textView.text = pokemonSpecies?.evolves_from_species?.name?.capitalize() ?: "N/A"
+            evolves_from_textView.text =
+                pokemonSpecies?.evolves_from_species?.name?.capitalize() ?: "N/A"
             generation_TextView.text = pokemonSpecies.generation.name
-            flavor_textView.text = pokemonSpecies.flavor_text_entries[pokemonSpecies.flavor_text_entries.indexOfFirst { it.language.name.equals("en") }].flavor_text
+            flavor_textView.text =
+                pokemonSpecies.flavor_text_entries[pokemonSpecies.flavor_text_entries.indexOfFirst {
+                    it.language.name.equals(
+                        Locale.getDefault().language
+                    )
+                }].flavor_text
         }
         viewModel.getPokemonSpeciesLiveData(id).observe(this, pokemonSpeciesObserver)
     }

@@ -1,4 +1,4 @@
-package com.example.pokedex
+package com.example.pokedex.views
 
 import android.os.Bundle
 import android.view.Menu
@@ -10,6 +10,8 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.pokedex.PokemonRecyclerAdapter
+import com.example.pokedex.R
 import com.example.pokedex.models.PokemonInfo
 import com.example.pokedex.viewmodels.MainViewModel
 
@@ -30,11 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-        recyclerView = findViewById(R.id.recyclerView)
-        recyclerView.adapter = pokemonRecyclerAdapter
-        recyclerView.setHasFixedSize(true)
-        val layoutManager = GridLayoutManager(this, 3)
-        recyclerView.layoutManager = layoutManager
+        val layoutManager = setupRecyclerView()
         recyclerView.addOnScrollListener(object : RecyclerView.OnScrollListener() {
             override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
                 super.onScrolled(recyclerView, dx, dy)
@@ -55,6 +53,15 @@ class MainActivity : AppCompatActivity() {
         })
         readyToPagination = true
         subscribe()
+    }
+
+    private fun setupRecyclerView(): GridLayoutManager {
+        recyclerView = findViewById(R.id.recyclerView)
+        recyclerView.adapter = pokemonRecyclerAdapter
+        recyclerView.setHasFixedSize(true)
+        val layoutManager = GridLayoutManager(this, 3)
+        recyclerView.layoutManager = layoutManager
+        return layoutManager
     }
 
     private fun subscribe() {
