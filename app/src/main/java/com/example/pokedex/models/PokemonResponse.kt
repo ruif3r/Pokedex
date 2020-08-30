@@ -1,4 +1,6 @@
 package com.example.pokedex.models
 
-class PokemonResponse(var results: ArrayList<PokemonInfo>)
+import com.google.gson.annotations.SerializedName
+
+data class PokemonResponse(@SerializedName("results") var pokemons: ArrayList<PokemonInfo>)
 
