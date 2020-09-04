@@ -3,12 +3,18 @@ package com.example.pokedex.repository
 import androidx.paging.PagingSource
 import com.example.pokedex.models.PokemonInfo
 import com.example.pokedex.pokeapi.PokeApiService
+import java.io.IOException
 
 class PokePagingSource(private val pokeApi: PokeApiService) : PagingSource<Int, PokemonInfo>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonInfo> {
-        val pageNumber = params.key ?: 0
-        val pokeList = pokeApi.getPokemonList(pageNumber)
-        return LoadResult.Page(pokeList.pokemons, null, pageNumber + 20)
+        return try {
+            val pageNumber = params.key ?: 0
+            val pokeList = pokeApi.getPokemonList(pageNumber)
+            LoadResult.Page(pokeList.pokemons, null, pageNumber + 20)
+        } catch (e: IOException) {
+
+            LoadResult.Error(e)
+        }
     }
 }

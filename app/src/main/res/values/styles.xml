@@ -9,4 +9,9 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="PokeButtonTheme" parent="AppTheme">
+        <item name="android:backgroundTint">@color/colorAccent</item>
+        <item name="android:foregroundTint">@color/colorAccentDark</item>
+    </style>
+
 </resources>

@@ -4,17 +4,22 @@ import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
+import android.widget.Button
 import android.widget.SearchView.OnQueryTextListener
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
+import androidx.core.view.isVisible
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.paging.ItemSnapshotList
+import androidx.paging.LoadState
 import androidx.paging.PagingData
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.pokedex.App
+import com.example.pokedex.PokeLoadStateAdapter
 import com.example.pokedex.PokemonRecyclerAdapter
 import com.example.pokedex.R
 import com.example.pokedex.models.PokemonInfo
@@ -34,11 +39,13 @@ class MainActivity : AppCompatActivity() {
         (applicationContext as App).applicationComponent.inject(this)
         setupRecyclerView()
         subscribingToPagingSource(null)
+        showErrorsIfOccur()
     }
 
     private fun setupRecyclerView() {
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter = pokemonRecyclerAdapter
+        recyclerView.adapter =
+            pokemonRecyclerAdapter.withLoadStateFooter(footer = PokeLoadStateAdapter { pokemonRecyclerAdapter.retry() })
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = GridLayoutManager(this, 3)
     }
@@ -58,6 +65,22 @@ class MainActivity : AppCompatActivity() {
                 )
             } else pokemonRecyclerAdapter.submitData(lifecycle, pagingData)
         })
+    }
+
+    private fun showErrorsIfOccur() {
+        val retryButton = findViewById<Button>(R.id.main_retry_button).also {
+            it.setOnClickListener { pokemonRecyclerAdapter.retry() }
+        }
+        pokemonRecyclerAdapter.addLoadStateListener {
+            retryButton.isVisible = it.refresh is LoadState.Error
+            when (it.refresh) {
+                is LoadState.Error -> Toast.makeText(
+                    this,
+                    getString(R.string.toast_error_message),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
