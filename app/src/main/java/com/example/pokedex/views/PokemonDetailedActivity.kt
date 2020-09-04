@@ -31,10 +31,10 @@ class PokemonDetailedActivity : AppCompatActivity() {
             .into(backPokemonImageView)
 
         subscribeToDetailsLiveData()
-        subscribeToSpieciesLiveData()
+        subscribeToSpeciesLiveData()
     }
 
-    fun subscribeToDetailsLiveData() {
+    private fun subscribeToDetailsLiveData() {
         val pokemonDetailObserver = Observer<PokemonInfo> { pokemonDetail ->
             pokemonNameTextView.text = pokemonDetail.name
             weightTextView.text = pokemonDetail.weight.toString()
@@ -52,7 +52,7 @@ class PokemonDetailedActivity : AppCompatActivity() {
         viewModel.getPokemonMainDetailsLiveData(id).observe(this, pokemonDetailObserver)
     }
 
-    fun subscribeToSpieciesLiveData() {
+    private fun subscribeToSpeciesLiveData() {
         val pokemonSpeciesObserver = Observer<PokemonInfo.PokemonSpecies> { pokemonSpecies ->
             evolves_from_textView.text =
                 pokemonSpecies?.evolves_from_species?.name?.capitalize() ?: "N/A"
