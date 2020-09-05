@@ -8,4 +8,4 @@ This app use the PokeAPI by Paul Hallet
 
 https://pokeapi.co/
 
-<img src="https://i.imgur.com/1EsmVV0.jpg" height="480">
+<img src="https://i.imgur.com/1EsmVV0.jpg" height="480"> <img src="https://i.imgur.com/byojgcR.jpg" height="480">
