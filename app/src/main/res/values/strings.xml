@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">Pokedex</string>
     <string name="search_title">search</string>
+    <string name="retry_button">Retry</string>
+    <string name="toast_error_message">Oops, something went wrong</string>
     <string name="base_experience_text_view">Base Experience:</string>
     <string name="weight_text_view">Weight:</string>
     <string name="height_text_view">Height:</string>
