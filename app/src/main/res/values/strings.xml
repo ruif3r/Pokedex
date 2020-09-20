@@ -3,4 +3,14 @@
     <string name="search_title">search</string>
     <string name="retry_button">Retry</string>
     <string name="toast_error_message">Oops, something went wrong</string>
+    <string name="base_experience_text_view">Base Experience:</string>
+    <string name="weight_text_view">Weight:</string>
+    <string name="height_text_view">Height:</string>
+    <string name="not_available_value">N/A</string>
+    <string name="types_text_view">Types:</string>
+    <string name="original_from_text_view">Original from:</string>
+    <string name="evolves_from_text_view">Evolves from:</string>
+    <string name="front_pokemon_image_description">Pokemon Front Side</string>
+    <string name="pokemon_back_image_description">Pokemon Back Side</string>
+    <string name="pokemon_types">%1$s/%2$s</string>
 </resources>

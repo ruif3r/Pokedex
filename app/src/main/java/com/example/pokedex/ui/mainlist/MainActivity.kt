@@ -5,6 +5,7 @@ import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
 import android.widget.Button
+import android.widget.ProgressBar
 import android.widget.SearchView.OnQueryTextListener
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -43,11 +44,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupRecyclerView() {
-        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView)
-        recyclerView.adapter =
-            pokemonRecyclerAdapter.withLoadStateFooter(footer = PokeLoadStateAdapter { pokemonRecyclerAdapter.retry() })
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = GridLayoutManager(this, 3)
+        val recyclerView = findViewById<RecyclerView>(R.id.recyclerView).run {
+            adapter =
+                pokemonRecyclerAdapter.withLoadStateFooter(footer = PokeLoadStateAdapter { pokemonRecyclerAdapter.retry() })
+            setHasFixedSize(true)
+            layoutManager = GridLayoutManager(this@MainActivity, 3)
+        }
     }
 
     private fun subscribingToPagingSource(search: String?) {
@@ -68,10 +70,12 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun showErrorsIfOccur() {
+        val progressBar = findViewById<ProgressBar>(R.id.main_progress_bar)
         val retryButton = findViewById<Button>(R.id.main_retry_button).also {
             it.setOnClickListener { pokemonRecyclerAdapter.retry() }
         }
         pokemonRecyclerAdapter.addLoadStateListener {
+            progressBar.isVisible = it.refresh is LoadState.Loading
             retryButton.isVisible = it.refresh is LoadState.Error
             when (it.refresh) {
                 is LoadState.Error -> Toast.makeText(
