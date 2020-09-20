@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_background"
-        tools:context=".views.PokemonDetailedActivity"
+        tools:context=".ui.detailed_pokemon.PokemonDetailActivity"
         android:animateLayoutChanges="true">
 
 
@@ -27,7 +27,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/backPokemonImageView"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:color/holo_blue_dark" />
+            app:srcCompat="@android:color/holo_blue_dark"
+            android:contentDescription="@string/front_pokemon_image_description" />
 
         <TextView
             android:id="@+id/pokemonNameTextView"
@@ -114,7 +115,8 @@
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:srcCompat="@android:color/holo_blue_light" />
+            app:srcCompat="@android:color/holo_blue_light"
+            android:contentDescription="@string/pokemon_back_image_description" />
 
         <TextView
             android:id="@+id/typeTitleTextView"
@@ -133,7 +135,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="32dp"
-            android:text=""
+            android:text="@string/not_available_value"
             app:layout_constraintStart_toEndOf="@+id/typeTitleTextView"
             app:layout_constraintTop_toBottomOf="@+id/weightTextView" />
 
@@ -141,17 +143,17 @@
             android:id="@+id/flavor_textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/borderline_rounded"
-            android:layout_marginStart="8dp"
+            android:layout_marginStart="16dp"
             android:layout_marginTop="250dp"
-            android:layout_marginEnd="8dp"
+            android:layout_marginEnd="16dp"
             android:layout_marginBottom="32dp"
-            tools:text="Description"
+            android:background="@drawable/borderline_rounded"
             android:textSize="20sp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/pokemonNameTextView" />
+            app:layout_constraintTop_toBottomOf="@+id/pokemonNameTextView"
+            tools:text="Description" />
 
         <TextView
             android:id="@+id/generation_TextView"

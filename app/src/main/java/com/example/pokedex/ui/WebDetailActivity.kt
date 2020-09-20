@@ -1,9 +1,9 @@
-package com.example.pokedex.views
+package com.example.pokedex.ui
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.webkit.WebChromeClient
 import android.webkit.WebViewClient
+import androidx.appcompat.app.AppCompatActivity
 import com.example.pokedex.R
 import kotlinx.android.synthetic.main.activity_web_detail.*
 

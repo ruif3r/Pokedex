@@ -1,6 +1,6 @@
 package com.example.pokedex.di
 
-import com.example.pokedex.pokeapi.PokeApiService
+import com.example.pokedex.pokeapi.PokeApi
 import dagger.Module
 import dagger.Provides
 import retrofit2.Retrofit
@@ -18,7 +18,7 @@ class NetworkModule {
 
     @Singleton
     @Provides
-    fun providesPokeApi(retrofit: Retrofit) = retrofit.create(PokeApiService::class.java)
+    fun providesPokeApi(retrofit: Retrofit) = retrofit.create(PokeApi::class.java)
 }
 
 

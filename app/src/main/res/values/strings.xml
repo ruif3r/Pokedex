@@ -10,4 +10,7 @@
     <string name="types_text_view">Types:</string>
     <string name="original_from_text_view">Original from:</string>
     <string name="evolves_from_text_view">Evolves from:</string>
+    <string name="front_pokemon_image_description">Pokemon Front Side</string>
+    <string name="pokemon_back_image_description">Pokemon Back Side</string>
+    <string name="pokemon_types">%1$s/%2$s</string>
 </resources>

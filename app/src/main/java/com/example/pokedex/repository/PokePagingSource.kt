@@ -2,10 +2,10 @@ package com.example.pokedex.repository
 
 import androidx.paging.PagingSource
 import com.example.pokedex.models.PokemonInfo
-import com.example.pokedex.pokeapi.PokeApiService
+import com.example.pokedex.pokeapi.PokeApi
 import java.io.IOException
 
-class PokePagingSource(private val pokeApi: PokeApiService) : PagingSource<Int, PokemonInfo>() {
+class PokePagingSource(private val pokeApi: PokeApi) : PagingSource<Int, PokemonInfo>() {
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, PokemonInfo> {
         return try {
